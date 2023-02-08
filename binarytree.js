@@ -146,12 +146,63 @@ class Tree {
       }
   }
 
+  heigth(node){
+    if (node === null) {
+      return 0;
+    }
+
+    let leftHeight = this.heigth(node.left);
+    let rightHeight = this.heigth(node.right);
+
+
+    if (leftHeight > rightHeight)
+      return (leftHeight + 1);
+    else
+      return (rightHeight + 1);
+  }
+
+
+  levelOrder(root) {
+    if (this.root === null) return;
+
+    let queue = [this.root];
+    let result = [];
+
+
+    while(queue.length > 0){
+      let temp = queue.shift();
+      result.push(temp.data);
+
+      if (temp.left !== null) queue.push(temp.left);
+      if (temp.right !== null) queue.push(temp.right);
+
+
+    }
+
+
+    console.log(result)
+
+
+  }
+
+  inorder(node) {
+
+    if (node === null) return ;
+
+    this.inorder(node.left)
+    this.inorder(node.right)
+    console.log(node.data)
+  }
+
+
 }
 
 
 
-let x = [ 2, 7, 4, 23, 8, 12, 4, 3, 5, 7, 9, 6, 67, 350, 324, 15];
+let x = [ 84, 2, 32, 59, 36, 2, 7, 66];
 let test = new Tree(x);
 
-prettyPrint(test.root);
-console.log(test.height(test.root))
+// prettyPrint(test.root);
+
+
+console.log(test.levelOrder())
