@@ -10,6 +10,7 @@ class Node {
       this.Head = headnode;
       this.Head.nextNode = null;
     }
+
     // Add to the begin of the liked list
     append(value) {
       // make a new node
@@ -169,3 +170,8 @@ class Node {
       return true;
     }
   }
+
+
+
+
+

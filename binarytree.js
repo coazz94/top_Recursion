@@ -146,11 +146,6 @@ class Tree {
       }
   }
 
-  printhey(){
-    console.log("hey")
-  }
-
-
 }
 
 
