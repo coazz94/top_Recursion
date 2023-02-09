@@ -109,6 +109,9 @@ class Node {
     }
 
     preorder(root) {
+
+
+
       if (root == null) return;
 
       if (root.data !== undefined) {
@@ -204,6 +207,10 @@ class Node {
 
       return balancedTree.root;
     }
+
+    test(root) {
+      console.log(root)
+    }
   }
 
   function minValue(root) {
@@ -244,6 +251,8 @@ class Node {
 x = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324, 15]
 let test = new Tree(x);
 
+
+
 const prettyPrint = (node, prefix = '', isLeft = true) => {
   if (node.right !== null) {
     prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
@@ -254,4 +263,8 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
   }
 }
 
-prettyPrint(test.root)
+test.preorder()
+console.log(test.preorderData)
+
+
+// prettyPrint(test.test())

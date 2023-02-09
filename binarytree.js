@@ -45,7 +45,12 @@ class Tree {
   constructor(array) {
     this.array = mergeSort(removeDuplicates(array));
     this.root = this.buildTree(this.array);
+    this.preOrderData = [];
+    this.inOrderData = [];
   }
+
+
+
 
   buildTree(array) {
     if (array.length < 1) return null;
@@ -127,82 +132,89 @@ class Tree {
     return temp;
   }
 
-  height(value){
-    if (value == null) return 0;
-    else
-      {
-      /* compute height of each subtree */
-      let lheight = this.height(value.left);
-      let rheight = this.height(value.right);
+  height(node){
+    if (node == null) return 0;
 
+    const leftHeight = this.height(node.left);
+    const rightHeight = this.height(node.right);
 
-      console.log(lheight, rheight, value)
-
-      /* use the larger one */
-      if (lheight > rheight)
-          return (lheight + 1);
-      else
-        return (rheight + 1);
-      }
-  }
-
-  heigth(node){
-    if (node === null) {
-      return 0;
-    }
-
-    let leftHeight = this.heigth(node.left);
-    let rightHeight = this.heigth(node.right);
-
-
-    if (leftHeight > rightHeight)
-      return (leftHeight + 1);
-    else
-      return (rightHeight + 1);
-  }
-
-
-  levelOrder(root) {
-    if (this.root === null) return;
-
-    let queue = [this.root];
-    let result = [];
-
-
-    while(queue.length > 0){
-      let temp = queue.shift();
-      result.push(temp.data);
-
-      if (temp.left !== null) queue.push(temp.left);
-      if (temp.right !== null) queue.push(temp.right);
-
-
+    if (leftHeight > rightHeight) {
+      return leftHeight + 1
+    }else {
+      return rightHeight + 1
     }
 
 
-    console.log(result)
-
 
   }
 
-  inorder(node) {
+  levelOrder(){
+    const queue = [this.root];
+    const sum = [];
 
-    if (node === null) return ;
+    while (queue.length > 0) {
+      let first = queue.shift();
+      sum.push(first.data);
 
-    this.inorder(node.left)
-    this.inorder(node.right)
-    console.log(node.data)
+      if (first.left !== null) queue.push(first.left);
+      if (first.right !== null) queue.push(first.right);
+    }
+
+    return sum;
+
   }
+
+  preOrder(node=this.root) {
+    if (node === null) return;
+
+    if (node.data !== undefined) this.preOrderData.push(node.data);
+
+    if (node.left !== null) this.preOrder(node.left);
+
+    if (node.right !== null) this.preOrder(node.right);
+
+  }
+
+
+
+
+  inOrder(node=this.root) {
+
+    if (node == null) return;
+
+    if (node.left !== null) {
+      this.inOrder(node.left);
+    }
+
+    if (node.data !== undefined) {
+      this.inOrderData.push(node.data);
+    }
+
+    if (node.right !== null) {
+      this.inOrder(node.right);
+    }
+  }
+
+
 
 
 }
 
 
 
-let x = [ 84, 2, 32, 59, 36, 2, 7, 66];
+let x = [ 84, 2, 32, 59, 36, 2, 7, 66, 5];
 let test = new Tree(x);
 
-// prettyPrint(test.root);
+prettyPrint(test.root);
+// test.test(test.root)
+// console.log(test.levelOrder())
+// test.preOrder()
+// console.log(test.preOrderData)
+
+test.inOrder()
+console.log(test.inOrderData)
 
 
-console.log(test.levelOrder())
+// console.log(test.preOrderData)
+// console.log(test.height(test.root))
+// console.log(test.levelOrder())
