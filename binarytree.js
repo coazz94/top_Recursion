@@ -2,6 +2,18 @@ function removeDuplicates(array) {
   return array.filter((value, index) => array.indexOf(value) === index);
 }
 
+function createRandomArray(size=10) {
+  let array = []
+
+  while(size !== 0){
+    size--;
+    array.push(Math.floor(Math.random() * 100))
+  }
+  return array;
+}
+
+
+
 function mergeSort(array) {
   if (array.length <= 1) return array;
 
@@ -47,10 +59,13 @@ class Tree {
     this.root = this.buildTree(this.array);
     this.preOrderData = [];
     this.inOrderData = [];
+    this.postOrderData = [];
+    this.orderRun = (() => {
+      this.preOrder(),
+      this.postOrder(),
+      this.inOrder()
+    })();
   }
-
-
-
 
   buildTree(array) {
     if (array.length < 1) return null;
@@ -132,8 +147,8 @@ class Tree {
     return temp;
   }
 
-  height(node){
-    if (node == null) return 0;
+  height(node= this.root){
+    if (node == null) return -1;
 
     const leftHeight = this.height(node.left);
     const rightHeight = this.height(node.right);
@@ -167,54 +182,60 @@ class Tree {
   preOrder(node=this.root) {
     if (node === null) return;
 
-    if (node.data !== undefined) this.preOrderData.push(node.data);
+    this.preOrderData.push(node.data)
 
-    if (node.left !== null) this.preOrder(node.left);
+    if (node.left !== null) (this.preOrder(node.left))
 
-    if (node.right !== null) this.preOrder(node.right);
+    if (node.right !== null) (this.preOrder(node.right))
 
   }
-
-
-
 
   inOrder(node=this.root) {
+    if (node === null) return;
 
-    if (node == null) return;
+    if (node.left !== null) (this.inOrder(node.left))
 
-    if (node.left !== null) {
-      this.inOrder(node.left);
-    }
+    this.inOrderData.push(node.data)
 
-    if (node.data !== undefined) {
-      this.inOrderData.push(node.data);
-    }
+    if (node.right !== null) (this.inOrder(node.right))
 
-    if (node.right !== null) {
-      this.inOrder(node.right);
-    }
   }
 
+  postOrder(node=this.root) {
+    if (node === null) return;
 
+    if (node.left !== null) (this.postOrder(node.left))
+
+    if (node.right !== null) (this.postOrder(node.right))
+
+    this.postOrderData.push(node.data)
+  }
+
+  isBalanced(node=this.root) {
+    if (node === null) return false;
+
+    let left = node.left;
+    let right = node.right;
+
+    return Math.abs(this.height(left) - this.height(right)) > 1 ? false: true;
+  }
+
+  reBalanced(node=this.root){
+    console.log("to be done")
+  }
 
 
 }
 
+// Create Tree based on a random Array
+let newTree = new Tree(createRandomArray());
+
+prettyPrint(newTree.root);
+console.log("Levelorder: ",newTree.levelOrder());
+console.log("InOrder: ", newTree.inOrderData);
+console.log("PreOrder: ", newTree.preOrderData);
+console.log("PostOrder: ", newTree.postOrderData);
+console.log("Height:", newTree.height());
+console.log("isBalanced:", newTree.isBalanced());
 
 
-let x = [ 84, 2, 32, 59, 36, 2, 7, 66, 5];
-let test = new Tree(x);
-
-prettyPrint(test.root);
-// test.test(test.root)
-// console.log(test.levelOrder())
-// test.preOrder()
-// console.log(test.preOrderData)
-
-test.inOrder()
-console.log(test.inOrderData)
-
-
-// console.log(test.preOrderData)
-// console.log(test.height(test.root))
-// console.log(test.levelOrder())
