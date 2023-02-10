@@ -217,6 +217,8 @@ class Tree {
     let left = node.left;
     let right = node.right;
 
+    console.log(this.height(left), this.height(right))
+
     return Math.abs(this.height(left) - this.height(right)) > 1 ? false: true;
   }
 
@@ -239,3 +241,7 @@ console.log("Height:", newTree.height());
 console.log("isBalanced:", newTree.isBalanced());
 
 
+// Testing the unbalanced function
+let newArray = createRandomArray()
+newArray.forEach(item => newTree.insert(item))
+console.log("isBalanced:", newTree.isBalanced());
